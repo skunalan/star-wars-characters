@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(/assets/img/star-wars-background.jpg);
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  background-position: center;
+  color: aliceblue;
+}
+
+#logo {
+  width: 40%;
+  height: 40%;
+}
