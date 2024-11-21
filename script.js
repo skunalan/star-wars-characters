@@ -129,10 +129,10 @@ function renderCharacters() {
     characterInfo.map((info) => {
       characterCards.innerHTML += `<div class="col-lg-4 col-sm-6 pb-5">
     <div class="card" style="width: 18rem;">
-    <img id="character-image" src="${info.pic}" class="card-img-top img-thumbnail" alt="" style="height: 25rem;">
+    <img id="character-image" src=${info.pic} class="card-img-top img-thumbnail" alt="" style="height: 25rem;">
     <div class="card-body">
-    <h4 id="character-name" class="pt-2">"${info.name}"</h4>
-    <p id="character-homewrold">"${info.homeworld}"</p>
+    <h4 id="character-name" class="pt-2">${info.name}</h4>
+    <p id="character-homewrold">${info.homeworld}</p>
     </div>
     </div>
     </div>`;
