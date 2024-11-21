@@ -125,6 +125,8 @@ const cardButton = document.getElementById("card-button");
 
 let isCharacterCardVisible = false;
 
+const backgroundMusic = new Audio(`assets/audio/imperial-march.mp3`)
+
 function renderCharacters() {
     characterInfo.map((info) => {
       characterCards.innerHTML += `<div class="col-lg-4 col-sm-6 pb-5">
@@ -137,12 +139,15 @@ function renderCharacters() {
     </div>
     </div>`;
     });
+    backgroundMusic.play();
     isCharacterCardVisible = true;
     cardButton.textContent = "Hide Characters";
     cardButton.classList.replace("btn-outline-success", "btn-outline-warning");
 }
 
 function removeCharacters() {
+  backgroundMusic.pause();
+  backgroundMusic.currentTime = 0;
   isCharacterCardVisible = false;
   characterCards.innerHTML = "";
   cardButton.textContent = "Show Characters";
