@@ -24,7 +24,7 @@
   <div class="container pt-5">
     <div class="row pt-5 justify-content-around">
       <div class="col-auto">
-        <button onclick="renderCharacters()" id="card-button" type="button" class="btn btn-outline-success btn-lg fw-bold"></button>
+        <button onclick="toggleCardButton()" id="card-button" type="button" class="btn btn-outline-success btn-lg fw-bold">Show Characters</button>
       </div>
       <div class="col-auto">
         <button id="filter-button" type="button" class="btn btn-outline-info btn-lg fw-bold">Filter Characters</button>
@@ -37,6 +37,16 @@
     <div id="character-cards" class="row pt-5">
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer py-2 text-center text-white small">
+    <div class="container">
+            Copyright © 
+            <span>
+              <a id="github-link" href="https://github.com/skunalan" target="_blank">Süleyman Korcan Ünalan</a>
+          </span> 2024
+    </div>
+  </footer>
 
 
   <!-- Javascript Files -->
