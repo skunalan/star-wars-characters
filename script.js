@@ -1,3 +1,5 @@
+// alert("Butona tıkladığınızda müzik çalmaya başlar!!!")
+
 const characterInfo = [
   {
     id: 1,
@@ -129,23 +131,25 @@ const backgroundMusic = new Audio(`assets/audio/imperial-march.mp3`)
 
 function renderCharacters() {
     characterInfo.map((info) => {
+      const homeworld = info.homeworld ? info.homeworld : "unknown";
+      const name = info.name ? info.name : "unknown";
       characterCards.innerHTML += `<div class="col-lg-4 col-sm-6 pb-5">
     <div class="card" style="width: 18rem;">
-    <img id="character-image" src=${info.pic} class="card-img-top img-thumbnail" alt="" style="height: 25rem;">
+    <img id="character-image" src=${info.pic} class="card-img-top img-thumbnail" alt="${name}" title="${name}" style="height: 25rem;">
     <div class="card-body">
-    <h4 id="character-name" class="pt-2">${info.name}</h4>
-    <p id="character-homewrold">${info.homeworld}</p>
+    <h4 id="character-name" class="pt-2">${name}</h4>
+    <p id="character-homewrold">${homeworld}</p>
     </div>
     </div>
     </div>`;
     });
-    backgroundMusic.play();
     isCharacterCardVisible = true;
     cardButton.textContent = "Hide Characters";
     cardButton.classList.replace("btn-outline-success", "btn-outline-warning");
-}
+    // backgroundMusic.play();
+  }
 
-function removeCharacters() {
+removeCharacters = () => {
   backgroundMusic.pause();
   backgroundMusic.currentTime = 0;
   isCharacterCardVisible = false;
@@ -154,7 +158,7 @@ function removeCharacters() {
   cardButton.classList.replace("btn-outline-warning", "btn-outline-success");
 }
 
-function toggleCardButton() {
+toggleCardButton = () => {
   if(isCharacterCardVisible) {
     removeCharacters();
   } else {
