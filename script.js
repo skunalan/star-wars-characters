@@ -173,7 +173,7 @@ const getUniqueHomeworlds = (characterInfo) => {
 const createHomeworldFilters = (homeworlds) => {
   filterSection.innerHTML = homeworlds.map((homeworld) => {
     return `<div class="form-check form-check-inline">
-    <input id=“filter-input” class="form-check-input" type="radio" name="homeworld" id="homeworld-${homeworld}" value="${homeworld}">
+    <input class="form-check-input" type="radio" name="homeworld" id="homeworld-${homeworld}" value="${homeworld}">
     <label class="form-check-label" for="homeworld-${homeworld}">${homeworld}
     </label>
     </div>`;
