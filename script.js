@@ -122,8 +122,11 @@ const characterInfo = [
 
 const characterCards = document.getElementById("character-cards");
 const cardButton = document.getElementById("card-button");
+const filterSection = document.getElementById("filter-section");
+const filterButton = document.getElementById("filter-button");
 
 let isCharacterCardVisible = false;
+let isFilterSectionVisible = false;
 
 function renderCharacters() {
     characterInfo.map((info) => {
@@ -142,6 +145,7 @@ function renderCharacters() {
     isCharacterCardVisible = true;
     cardButton.textContent = "Hide Characters";
     cardButton.classList.replace("btn-outline-success", "btn-outline-warning");
+    cardButton.classList.add("text-danger");
   }
 
 removeCharacters = () => {
@@ -149,6 +153,7 @@ removeCharacters = () => {
   characterCards.innerHTML = "";
   cardButton.textContent = "Show Characters";
   cardButton.classList.replace("btn-outline-warning", "btn-outline-success");
+  cardButton.classList.remove("text-danger");
 }
 
 toggleCardButton = () => {
@@ -156,5 +161,32 @@ toggleCardButton = () => {
     removeCharacters();
   } else {
     renderCharacters();
+  }
+}
+
+const getUniqueHomeworlds = (characterInfo) => {
+  const homeworldRaw = characterInfo.map((item) => item.homeworld ?? "unknown");
+  const homeworldRawLowerCase = homeworldRaw.map((item) => item.toLowerCase());
+  return [...new Set(homeworldRawLowerCase)];
+}
+
+const createHomeworldFilters = (homeworlds) => {
+  filterSection.innerHTML = homeworlds.map((homeworld) => {
+    return `<div class="form-check form-check-inline">
+    <input id=“filter-input” class="form-check-input" type="radio" name="homeworld" id="homeworld-${homeworld}" value="${homeworld}">
+    <label class="form-check-label" for="homeworld-${homeworld}">${homeworld}
+    </label>
+    </div>`;
+  }).join("");
+  isFilterSectionVisible = true;
+}
+
+filterButtonClick = () => {
+  if(isFilterSectionVisible) {
+    filterSection.innerHTML = "";
+    isFilterSectionVisible = false;
+  } else {
+    const uniqueHomeworlds = getUniqueHomeworlds(characterInfo);
+    createHomeworldFilters(uniqueHomeworlds);
   }
 }
