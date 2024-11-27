@@ -128,11 +128,12 @@ const filterButton = document.getElementById("filter-button");
 let isCharacterCardVisible = false;
 let isFilterSectionVisible = false;
 
-function renderCharacters() {
-    characterInfo.map((info) => {
-      const homeworld = info.homeworld ? info.homeworld : "unknown";
-      const name = info.name ? info.name : "unknown";
-      characterCards.innerHTML += `<div class="col-lg-4 col-sm-6 pb-5">
+function renderCharacters(filteredCharacters = characterInfo) {
+  characterCards.innerHTML = "";
+  filteredCharacters.map((info) => {
+    const name = info.name ?? "unknown";
+    const homeworld = info.homeworld ?? "unknown";
+    characterCards.innerHTML += `<div class="col-lg-4 col-sm-6 pb-5">
     <div class="card" style="width: 18rem;">
     <img id="character-image" src=${info.pic} class="card-img-top img-thumbnail" alt="${name}" title="${name}" style="height: 25rem;">
     <div class="card-body">
@@ -141,12 +142,12 @@ function renderCharacters() {
     </div>
     </div>
     </div>`;
-    });
-    isCharacterCardVisible = true;
-    cardButton.textContent = "Hide Characters";
-    cardButton.classList.replace("btn-outline-success", "btn-warning");
-    cardButton.classList.add("text-danger");
-  }
+  });
+  isCharacterCardVisible = true;
+  cardButton.textContent = "Hide Characters";
+  cardButton.classList.replace("btn-outline-success", "btn-warning");
+  cardButton.classList.add("text-danger");
+}
 
 removeCharacters = () => {
   isCharacterCardVisible = false;
@@ -154,43 +155,70 @@ removeCharacters = () => {
   cardButton.textContent = "Show Characters";
   cardButton.classList.replace("btn-warning", "btn-outline-success");
   cardButton.classList.remove("text-danger");
-}
+};
 
 toggleCardButton = () => {
-  if(isCharacterCardVisible) {
+  if (isCharacterCardVisible) {
     removeCharacters();
   } else {
     renderCharacters();
   }
-}
+};
 
+// Unique Values
 const getUniqueHomeworlds = (characterInfo) => {
   const homeworldRaw = characterInfo.map((item) => item.homeworld ?? "unknown");
   const homeworldRawLowerCase = homeworldRaw.map((item) => item.toLowerCase());
   return [...new Set(homeworldRawLowerCase)];
-}
-
-const createHomeworldFilters = (homeworlds) => {
-  filterSection.innerHTML = homeworlds.map((homeworld) => {
-    return `<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="homeworld" id="homeworld-${homeworld}" value="${homeworld}">
-    <label class="form-check-label" for="homeworld-${homeworld}">${homeworld}
-    </label>
-    </div>`;
-  }).join("");
-  isFilterSectionVisible = true;
-}
+};
 
 filterButtonClick = () => {
-  if(isFilterSectionVisible) {
+  if (isFilterSectionVisible) {
     filterSection.innerHTML = "";
     isFilterSectionVisible = false;
     filterButton.classList.replace("btn-info", "btn-outline-info");
-
   } else {
     const uniqueHomeworlds = getUniqueHomeworlds(characterInfo);
     createHomeworldFilters(uniqueHomeworlds);
     filterButton.classList.replace("btn-outline-info", "btn-info");
-
   }
-}
+};
+
+const createHomeworldFilters = (homeworlds) => {
+  filterSection.innerHTML = homeworlds
+    .map((homeworld) => {
+      return `<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="homeworld" id="selected-${homeworld}" value="${homeworld}">
+    <label class="form-check-label" for="selected-${homeworld}">${homeworld}
+    </label>
+    </div>`;
+    })
+    .join("");
+  isFilterSectionVisible = true;
+};
+
+// Filter Section
+selectFilter = () => {
+  const radioButtons = document.getElementsByName("homeworld")
+  for(const radioButton of radioButtons) {
+    if(radioButton.checked) {
+      filteredHomeworld = radioButton.value;
+    }
+  }
+  if (!filteredHomeworld) {
+    return characterInfo;
+  }
+  const filteredCharacters = characterInfo.filter((character) => {
+    const homeworld = character.homeworld ?? "unknown";
+    const homeworldLowerCase = homeworld.toLowerCase();
+    return homeworldLowerCase === filteredHomeworld;
+  });
+  return filteredCharacters;
+};
+
+filterCharacters = () => {
+  if (!isCharacterCardVisible) return;
+  const filteredCharacters = selectFilter();
+  renderCharacters(filteredCharacters);
+};
+filterSection.addEventListener("change", filterCharacters);
