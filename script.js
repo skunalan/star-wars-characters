@@ -144,7 +144,7 @@ function renderCharacters() {
     });
     isCharacterCardVisible = true;
     cardButton.textContent = "Hide Characters";
-    cardButton.classList.replace("btn-outline-success", "btn-outline-warning");
+    cardButton.classList.replace("btn-outline-success", "btn-warning");
     cardButton.classList.add("text-danger");
   }
 
@@ -152,7 +152,7 @@ removeCharacters = () => {
   isCharacterCardVisible = false;
   characterCards.innerHTML = "";
   cardButton.textContent = "Show Characters";
-  cardButton.classList.replace("btn-outline-warning", "btn-outline-success");
+  cardButton.classList.replace("btn-warning", "btn-outline-success");
   cardButton.classList.remove("text-danger");
 }
 
@@ -185,8 +185,12 @@ filterButtonClick = () => {
   if(isFilterSectionVisible) {
     filterSection.innerHTML = "";
     isFilterSectionVisible = false;
+    filterButton.classList.replace("btn-info", "btn-outline-info");
+
   } else {
     const uniqueHomeworlds = getUniqueHomeworlds(characterInfo);
     createHomeworldFilters(uniqueHomeworlds);
+    filterButton.classList.replace("btn-outline-info", "btn-info");
+
   }
 }
