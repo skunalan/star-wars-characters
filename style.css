@@ -19,6 +19,11 @@ body {
   height: 40%;
 }
 
+.form-check-input {
+  background-color: #000000;
+  border-color: #FCDF2B;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
